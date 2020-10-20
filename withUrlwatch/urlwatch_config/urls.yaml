@@ -1,0 +1,5 @@
+name: "Sandbox"
+# navigate: "https://2b01842a4394.ngrok.io/fakeWebApp/"
+navigate: "http://localhost:1234/fakeWebApp/"
+kind: browser
+wait_until: "networkidle0"
