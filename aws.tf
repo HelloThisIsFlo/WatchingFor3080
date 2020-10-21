@@ -12,7 +12,7 @@ provider "aws" {
   region  = "eu-west-1"
 }
 
-resource "aws_instance" "example" {
-  ami           = "ami-09b9e380df60300c8"
-  instance_type = "t2.micro"
+resource "aws_s3_bucket" "bucket" {
+  bucket = "watch-for-3080"
+  acl = "public-read"
 }
