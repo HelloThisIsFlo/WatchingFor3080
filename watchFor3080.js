@@ -71,7 +71,6 @@ async function tryToCheckForDiff(browser, siteId) {
   }
 }
 
-const process = require('process')
 async function checkForDiffOnAllSites(browser) {
   await Promise.all([
     tryToCheckForDiff(browser, "nvidiaStoreFR"),
@@ -92,7 +91,9 @@ async function checkForDiffOnAllSites(browser) {
     });
   };
 
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+  });
 
   try {
     console.log("");

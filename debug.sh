@@ -14,7 +14,7 @@ docker run \
     --rm \
     --cap-add=SYS_ADMIN \
     --name watch-for-3080 \
-    -v $DIR/screenshots:/home/pptruser/app/screenshots \
+    -v $DIR/screenshots:/app/screenshots \
     watch-for-3080 \
     ./run_every_x_secs.sh
     # node -e "$(cat watchFor3080.js)"
