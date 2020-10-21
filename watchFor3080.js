@@ -2,6 +2,10 @@ const puppeteer = require("puppeteer");
 const fs = require("fs");
 
 const { WebPageSnapshots } = require("./lib/browser");
+const {
+  sendAvailabilityNotification,
+  sendErrorNotification,
+} = require("./lib/notifications");
 
 const SITES = {
   nvidiaStoreGB: {
@@ -29,29 +33,6 @@ const SITES = {
 };
 
 const DIFF_THRESHOLD = 0.003;
-
-async function sendAvailabilityNotification(siteId, siteUrl, diffSnapshotPath) {
-  console.log(
-    `
-Sending (fake/stdout) Telegram notification:
-3080 is AVAILABLE !!!!
-  - Site: ${siteId}
-  - URL: ${siteUrl}
-  - Diff: ${diffSnapshotPath}
-  `
-  );
-}
-
-async function sendErrorNotification(siteId, err) {
-  console.log(
-    `
-Sending (fake/stdout) Telegram notification:
-ERROR
-- SiteId: ${siteId}
-- ${err}
-  `
-  );
-}
 
 async function checkForDiff(browser, siteId) {
   if (!(siteId in SITES)) throw new Error(`Invalid siteId: '${siteId}'`);
@@ -90,6 +71,7 @@ async function tryToCheckForDiff(browser, siteId) {
   }
 }
 
+const process = require('process')
 async function checkForDiffOnAllSites(browser) {
   await Promise.all([
     tryToCheckForDiff(browser, "nvidiaStoreFR"),
