@@ -20,6 +20,7 @@ ADD ./package.json .
 RUN npm install
 
 ADD ./watchFor3080.js .
+ADD ./sites.json .
 ADD ./lib ./lib
 
 ADD ./run_every_x_secs.sh .
