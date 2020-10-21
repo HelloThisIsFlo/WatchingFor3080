@@ -19,11 +19,10 @@ ADD ./package-lock.json .
 ADD ./package.json .
 RUN npm install
 
-ADD ./watchFor3080.js .
-ADD ./sites.js .
-ADD ./lib ./lib
 ADD ./.env .
+ADD ./index.js .
+ADD ./lib ./lib
 
-ADD ./run_every_x_secs.sh .
+ADD ./scripts/deploy/run_every_x_secs.sh .
 
-CMD ["npm", "start"]
+CMD ["./run_every_x_secs.sh"]

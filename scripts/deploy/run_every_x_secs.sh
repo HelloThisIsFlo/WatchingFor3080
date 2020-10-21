@@ -5,6 +5,6 @@ SLEEP_DURATION=20
 
 while true; do
     echo "Checking for changes..."
-    node -e "$(cat watchFor3080.js)"
+    npm start
     sleep $SLEEP_DURATION
 done
