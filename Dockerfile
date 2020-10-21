@@ -22,6 +22,7 @@ RUN npm install
 ADD ./watchFor3080.js .
 ADD ./sites.js .
 ADD ./lib ./lib
+ADD ./.env .
 
 ADD ./run_every_x_secs.sh .
 
