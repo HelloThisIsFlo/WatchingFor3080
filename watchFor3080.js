@@ -7,7 +7,7 @@ const {
   sendErrorNotification,
 } = require("./lib/notifications");
 
-const SITES = require("./sites.json");
+const SITES = require("./sites");
 
 const DIFF_THRESHOLD = 0.003;
 
