@@ -45,4 +45,9 @@ RUN npm install
 ADD ./watchFor3080.js .
 ADD ./lib ./lib
 
+ADD ./run_every_x_secs.sh .
+USER root
+RUN chown pptruser:pptruser ./run_every_x_secs.sh
+USER pptruser
+
 CMD ["npm", "start"]

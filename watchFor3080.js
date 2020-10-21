@@ -30,7 +30,7 @@ const SITES = {
 
 const DIFF_THRESHOLD = 0.003;
 
-async function sendNotification(siteId, siteUrl, diffSnapshotPath) {
+async function sendAvailabilityNotification(siteId, siteUrl, diffSnapshotPath) {
   console.log(
     `
 Sending (fake/stdout) Telegram notification:
@@ -38,6 +38,17 @@ Sending (fake/stdout) Telegram notification:
   - Site: ${siteId}
   - URL: ${siteUrl}
   - Diff: ${diffSnapshotPath}
+  `
+  );
+}
+
+async function sendErrorNotification(siteId, err) {
+  console.log(
+    `
+Sending (fake/stdout) Telegram notification:
+ERROR
+- SiteId: ${siteId}
+- ${err}
   `
   );
 }
@@ -62,7 +73,7 @@ async function checkForDiff(browser, siteId) {
     const diffPercent = await webPageSnapshots.compareSnapshots();
 
     if (diffPercent > DIFF_THRESHOLD) {
-      await sendNotification(
+      await sendAvailabilityNotification(
         siteId,
         site.url,
         webPageSnapshots.diffSnapshotPath()
@@ -70,13 +81,21 @@ async function checkForDiff(browser, siteId) {
     }
   }
 }
+async function tryToCheckForDiff(browser, siteId) {
+  try {
+    await checkForDiff(browser, siteId);
+  } catch (err) {
+    console.log(err);
+    await sendErrorNotification(siteId, err);
+  }
+}
 
 async function checkForDiffOnAllSites(browser) {
   await Promise.all([
-    checkForDiff(browser, "nvidiaStoreFR"),
-    checkForDiff(browser, "nvidiaStoreGB"),
-    checkForDiff(browser, "scanGB"),
-    checkForDiff(browser, "sandbox"),
+    tryToCheckForDiff(browser, "nvidiaStoreFR"),
+    tryToCheckForDiff(browser, "nvidiaStoreGB"),
+    tryToCheckForDiff(browser, "scanGB"),
+    tryToCheckForDiff(browser, "sandbox"),
   ]);
 }
 
@@ -94,11 +113,13 @@ async function checkForDiffOnAllSites(browser) {
   const browser = await puppeteer.launch();
 
   try {
+    console.log("");
     const start = Date.now();
     await checkForDiffOnAllSites(browser);
     const end = Date.now();
     const runDurationSec = (end - start) / 1000;
     console.log(`This run took: ${runDurationSec}s`);
+    console.log("");
   } catch (err) {
     console.log(err);
   } finally {
