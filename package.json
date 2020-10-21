@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.775.0",
     "puppeteer": "^5.3.1",
     "resemblejs": "^3.2.5"
   }
