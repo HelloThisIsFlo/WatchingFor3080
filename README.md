@@ -12,6 +12,10 @@ This project watches the nvidia stores for visual differences and notifies via a
 
 It does not purchase a card automatically, it only allows normal people (aka non-bots) to be notified as soon as possible to then try and place a manual order.
 
+## Does it work?
+
+![Nvidia 3080](https://github.com/FlorianKempenich/WatchingFor3080/raw/master/3080.jpeg)
+
 ## Deploy
 
 ### AWS
